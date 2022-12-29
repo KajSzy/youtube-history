@@ -57,25 +57,59 @@ export const useHistoryChannels = () => {
   }, [entries]);
 };
 
+const filterEntriesByChannel = (
+  entries: HistoryData.Entry[],
+  channel: string
+) =>
+  entries.filter((entry) => {
+    if (entry.subtitles && entry.subtitles.length !== 0) {
+      const channelName = entry.subtitles[0].name;
+      return channelName === channel;
+    }
+    return false;
+  });
+
 export const useSelectedChannelData = () => {
   const channel = useSelectedChannel();
   const entries = useHistoryEntries();
 
   return useMemo(() => {
     const entriesMap = new Map<string, HistoryData.Entry & { views: number }>();
-    entries
-      .filter((entry) => {
-        if (entry.subtitles && entry.subtitles.length !== 0) {
-          const channelName = entry.subtitles[0].name;
-          return channelName === channel;
-        }
-        return false;
-      })
-      .forEach((entry) => {
-        const views = entriesMap.get(entry.title)?.views ?? 0;
-        entriesMap.set(entry.title, { ...entry, views: views + 1 });
-      });
+    if (!channel) {
+      return [];
+    }
+    filterEntriesByChannel(entries, channel).forEach((entry) => {
+      const views = entriesMap.get(entry.title)?.views ?? 0;
+      entriesMap.set(entry.title, { ...entry, views: views + 1 });
+    });
 
     return Array.from(entriesMap.values()).sort(sortByViews);
+  }, [entries, channel]);
+};
+
+export const useSelectedChannelPerMonth = () => {
+  const entries = useHistoryEntries();
+  const channel = useSelectedChannel();
+
+  return useMemo(() => {
+    const entriesMap = new Map<string, { date: string; views: number }>();
+    if (!channel) {
+      return {};
+    }
+    filterEntriesByChannel(entries, channel).forEach((entry) => {
+      const date = new Date(entry.time);
+      const watchDate = date.toLocaleString("default", {
+        month: "long",
+        year: "numeric",
+      });
+      const views = entriesMap.get(watchDate)?.views ?? 0;
+      entriesMap.set(watchDate, { date: watchDate, views: views + 1 });
+    });
+    return Array.from(entriesMap.values())
+      .reverse()
+      .reduce((prev, curr) => {
+        prev[curr.date] = curr.views;
+        return prev;
+      }, {} as Record<string, number>);
   }, [entries, channel]);
 };

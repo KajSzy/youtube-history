@@ -10,7 +10,7 @@ export function ChannelsPicker() {
   const value = useSelectedChannel();
   const { setSelectedChannel } = useHistoryStateActions();
 
-  if (!channels.length) {
+  if (!channels.length || value) {
     return null;
   }
 

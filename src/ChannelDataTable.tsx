@@ -1,4 +1,6 @@
-import { Table, Text } from "@mantine/core";
+import { Table, Text, Title } from "@mantine/core";
+import { useMemo } from "react";
+import { Header } from "./Header";
 import {
   useHistoryChannels,
   useHistoryStateActions,
@@ -11,6 +13,11 @@ export function ChannelDataTable() {
   const channel = useSelectedChannel();
   const entries = useSelectedChannelData();
   const { setSelectedChannel } = useHistoryStateActions();
+
+  const combinedChannelViews = useMemo(
+    () => entries.reduce((prev, curr) => prev + curr.views, 0),
+    [entries]
+  );
 
   const onChannelSelect = (title: string) => () => {
     setSelectedChannel(title);
@@ -35,7 +42,7 @@ export function ChannelDataTable() {
         >
           <thead>
             <tr>
-              <th>Odcinek</th>
+              <th>Kanał</th>
               <th>Obejrzany</th>
             </tr>
           </thead>
@@ -69,9 +76,14 @@ export function ChannelDataTable() {
 
   return (
     <>
+      <Title order={2}>{channel}</Title>
       <Text fz="xl">
-        Łącznie kanał <b style={{ fontSize: "140%" }}>{channel}</b> obejrzałeś{" "}
-        {entries.length} razy
+        Łączna liczba obejrzanych filmów kanału <i>{channel}</i> wynosi{" "}
+        {entries.length}
+      </Text>
+      <Text fz="xl">
+        Filmy kanału <i>{channel}</i> zostały wyświetlone łącznie{" "}
+        {combinedChannelViews} razy
       </Text>
       <Table
         striped
@@ -87,9 +99,13 @@ export function ChannelDataTable() {
           </tr>
         </thead>
         <tbody>
-          {entries.map(({ title, views }) => (
+          {entries.map(({ title, views, titleUrl }) => (
             <tr key={title}>
-              <td>{title}</td>
+              <td>
+                <a href={titleUrl} target="_blank">
+                  {title}
+                </a>
+              </td>
               <td>{views}</td>
             </tr>
           ))}

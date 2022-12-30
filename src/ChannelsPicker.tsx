@@ -1,9 +1,9 @@
 import { Select } from "@mantine/core";
 import {
-  useHistoryChannels,
   useHistoryStateActions,
   useSelectedChannel,
 } from "./store/historyStore";
+import { useHistoryChannels } from "./store/historyStore.hooks";
 
 export function ChannelsPicker() {
   const channels = useHistoryChannels();

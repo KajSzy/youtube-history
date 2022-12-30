@@ -1,9 +1,8 @@
-import { Text, Title } from "@mantine/core";
+import { Flex, Text, Title } from "@mantine/core";
 import React from "react";
-import {
-  useSelectedChannel,
-  useSelectedChannelData,
-} from "../../store/historyStore";
+import { useSelectedChannel } from "../../store/historyStore";
+import { useSelectedChannelData } from "../../store/historyStore.hooks";
+import { YearSelect } from "../../YearSelect";
 import { DataTable } from "./DataTable";
 
 export function VideosTable() {
@@ -16,15 +15,20 @@ export function VideosTable() {
   );
   return (
     <>
-      <Title order={2}>{channel}</Title>
-      <Text fz="xl">
-        Łączna liczba obejrzanych filmów kanału <i>{channel}</i> wynosi{" "}
-        {videos.length}
-      </Text>
-      <Text fz="xl">
-        Filmy kanału <i>{channel}</i> zostały wyświetlone łącznie{" "}
-        {combinedChannelViews} razy
-      </Text>
+      <Flex justify="space-between" style={{ width: "100%" }}>
+        <div>
+          <Title order={2}>{channel}</Title>
+          <Text fz="xl">
+            Łączna liczba obejrzanych filmów kanału <i>{channel}</i> wynosi{" "}
+            {videos.length}
+          </Text>
+          <Text fz="xl">
+            Filmy kanału <i>{channel}</i> zostały wyświetlone łącznie{" "}
+            {combinedChannelViews} razy
+          </Text>
+        </div>
+        <YearSelect />
+      </Flex>
       <DataTable columns={["Film", "Obejrzany"]}>
         {videos.map(({ title, views, titleUrl }) => (
           <tr key={title}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useMostViewedVideos } from "../../store/historyStore";
+import { useMostViewedVideos } from "../../store/historyStore.hooks";
 import { DataTable } from "./DataTable";
 
 export function MostViewedVideosTable() {

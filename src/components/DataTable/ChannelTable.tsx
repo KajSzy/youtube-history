@@ -1,9 +1,7 @@
 import { Text } from "@mantine/core";
 import React from "react";
-import {
-  useHistoryChannels,
-  useHistoryStateActions,
-} from "../../store/historyStore";
+import { useHistoryStateActions } from "../../store/historyStore";
+import { useHistoryChannels } from "../../store/historyStore.hooks";
 import { DataTable } from "./DataTable";
 
 export function ChannelTable() {

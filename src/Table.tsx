@@ -1,9 +1,9 @@
-import { Tabs, Title } from "@mantine/core";
-import React from "react";
+import { Flex, Tabs, Title } from "@mantine/core";
 import { ChannelTable } from "./components/DataTable/ChannelTable";
 import { MostViewedVideosTable } from "./components/DataTable/MostViewedVideosTable";
 import { VideosTable } from "./components/DataTable/VideosTable";
-import { useSelectedChannel, useHistoryEntries } from "./store/historyStore";
+import { useHistoryEntries, useSelectedChannel } from "./store/historyStore";
+import { YearSelect } from "./YearSelect";
 
 export function Table() {
   const data = useHistoryEntries();
@@ -25,11 +25,17 @@ export function Table() {
       </Tabs.List>
 
       <Tabs.Panel value="channels">
-        <Title>Wybierz kanał, który Cię interesuje z listy poniżej</Title>
+        <Flex justify="space-between">
+          <Title>Wybierz kanał z listy poniżej</Title>
+          <YearSelect />
+        </Flex>
         <ChannelTable />
       </Tabs.Panel>
       <Tabs.Panel value="videos">
-        <Title>Lista 100 najczęściej oglądanych filmów</Title>
+        <Flex justify="space-between">
+          <Title>Lista 100 najczęściej oglądanych filmów</Title>
+          <YearSelect />
+        </Flex>
         <MostViewedVideosTable />
       </Tabs.Panel>
     </Tabs>

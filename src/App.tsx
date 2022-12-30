@@ -1,8 +1,8 @@
 import { Container, Flex } from "@mantine/core";
-import { ChannelDataTable } from "./ChannelDataTable";
 import { Header } from "./Header";
 import { Help } from "./Help";
 import { JsonFileInput } from "./JsonFile";
+import { Table } from "./Table";
 
 function App() {
   return (
@@ -17,9 +17,7 @@ function App() {
         <Header />
         <JsonFileInput />
         <Help />
-        {/* <ChannelsPicker /> */}
-        {/* <HeatMap /> */}
-        <ChannelDataTable />
+        <Table />
       </Flex>
     </Container>
   );

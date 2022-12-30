@@ -3,7 +3,7 @@ import {
   useHistoryChannels,
   useHistoryStateActions,
   useSelectedChannel,
-} from "./historyStore";
+} from "./store/historyStore";
 
 export function ChannelsPicker() {
   const channels = useHistoryChannels();

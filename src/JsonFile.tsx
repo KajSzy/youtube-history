@@ -1,6 +1,9 @@
 import { FileInput } from "@mantine/core";
 import React, { useRef } from "react";
-import { useHistoryEntries, useHistoryStateActions } from "./historyStore";
+import {
+  useHistoryEntries,
+  useHistoryStateActions,
+} from "./store/historyStore";
 
 export function JsonFileInput() {
   const { setEntries } = useHistoryStateActions();

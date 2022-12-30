@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import create from "zustand";
-import { HistoryData } from "./HistoryData";
+import { HistoryData } from "../HistoryData";
 
 const sortByViews = <T extends { views: number }>(a: T, b: T) =>
   b.views - a.views;
@@ -79,8 +79,8 @@ export const useSelectedChannelData = () => {
       return [];
     }
     filterEntriesByChannel(entries, channel).forEach((entry) => {
-      const views = entriesMap.get(entry.title)?.views ?? 0;
-      entriesMap.set(entry.title, { ...entry, views: views + 1 });
+      const views = entriesMap.get(entry.titleUrl)?.views ?? 0;
+      entriesMap.set(entry.titleUrl, { ...entry, views: views + 1 });
     });
 
     return Array.from(entriesMap.values()).sort(sortByViews);
@@ -112,4 +112,20 @@ export const useSelectedChannelPerMonth = () => {
         return prev;
       }, {} as Record<string, number>);
   }, [entries, channel]);
+};
+
+export const useMostViewedVideos = () => {
+  const entries = useHistoryEntries();
+
+  return useMemo(() => {
+    const entriesMap = new Map<string, HistoryData.Entry & { views: number }>();
+    entries
+      .filter((entry) => Boolean(entry.titleUrl))
+      .forEach((entry) => {
+        const views = entriesMap.get(entry.titleUrl)?.views ?? 0;
+        entriesMap.set(entry.titleUrl, { ...entry, views: views + 1 });
+      });
+
+    return Array.from(entriesMap.values()).sort(sortByViews).slice(0, 100);
+  }, [entries]);
 };

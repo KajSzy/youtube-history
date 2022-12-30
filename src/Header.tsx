@@ -3,7 +3,7 @@ import {
   useHistoryEntries,
   useHistoryStateActions,
   useSelectedChannel,
-} from "./historyStore";
+} from "./store/historyStore";
 
 export function Header() {
   const entries = useHistoryEntries();
@@ -27,9 +27,9 @@ export function Header() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
@@ -38,13 +38,13 @@ export function Header() {
     );
   }
 
-  if (entries.length) {
-    return <Title>Wybierz kanał, który Cię interesuje z listy poniżej</Title>;
+  if (!entries.length) {
+    return (
+      <Title order={1}>
+        Pobierz z Google'a swoją historię Youtube i wgraj plik
+      </Title>
+    );
   }
 
-  return (
-    <Title order={1}>
-      Pobierz z Google'a swoją historię Youtube i wgraj plik
-    </Title>
-  );
+  return null;
 }

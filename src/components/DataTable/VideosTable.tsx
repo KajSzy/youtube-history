@@ -1,0 +1,42 @@
+import { Text, Title } from "@mantine/core";
+import React from "react";
+import {
+  useSelectedChannel,
+  useSelectedChannelData,
+} from "../../store/historyStore";
+import { DataTable } from "./DataTable";
+
+export function VideosTable() {
+  const channel = useSelectedChannel();
+  const videos = useSelectedChannelData();
+
+  const combinedChannelViews = React.useMemo(
+    () => videos.reduce((prev, curr) => prev + curr.views, 0),
+    [videos]
+  );
+  return (
+    <>
+      <Title order={2}>{channel}</Title>
+      <Text fz="xl">
+        Łączna liczba obejrzanych filmów kanału <i>{channel}</i> wynosi{" "}
+        {videos.length}
+      </Text>
+      <Text fz="xl">
+        Filmy kanału <i>{channel}</i> zostały wyświetlone łącznie{" "}
+        {combinedChannelViews} razy
+      </Text>
+      <DataTable columns={["Film", "Obejrzany"]}>
+        {videos.map(({ title, views, titleUrl }) => (
+          <tr key={title}>
+            <td>
+              <a href={titleUrl} target="_blank">
+                {title}
+              </a>
+            </td>
+            <td>{views}</td>
+          </tr>
+        ))}
+      </DataTable>
+    </>
+  );
+}

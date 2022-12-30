@@ -1,6 +1,6 @@
 import { Button, Transition } from "@mantine/core";
 import React from "react";
-import { useHistoryEntries } from "./historyStore";
+import { useHistoryEntries } from "./store/historyStore";
 
 export function Help() {
   const [opened, setOpened] = React.useState(false);

@@ -4,6 +4,7 @@ import { useSelectedChannel } from "../../store/historyStore";
 import { useSelectedChannelData } from "../../store/historyStore.hooks";
 import { YearSelect } from "../../YearSelect";
 import { DataTable } from "./DataTable";
+import { TitleTableCell } from "./TitleTableCell";
 
 export function VideosTable() {
   const channel = useSelectedChannel();
@@ -37,11 +38,11 @@ export function VideosTable() {
       <DataTable columns={["Film", "Obejrzany"]}>
         {videos.map(({ title, views, titleUrl }) => (
           <tr key={title}>
-            <td>
+            <TitleTableCell>
               <a href={titleUrl} target="_blank">
                 {title}
               </a>
-            </td>
+            </TitleTableCell>
             <td>{views}</td>
           </tr>
         ))}

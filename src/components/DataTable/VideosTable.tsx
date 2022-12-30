@@ -15,7 +15,12 @@ export function VideosTable() {
   );
   return (
     <>
-      <Flex justify="space-between" style={{ width: "100%" }}>
+      <Flex
+        justify="space-between"
+        direction="column"
+        gap="xl"
+        style={{ width: "100%" }}
+      >
         <div>
           <Title order={2}>{channel}</Title>
           <Text fz="xl">

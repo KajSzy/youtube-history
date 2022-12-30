@@ -20,9 +20,8 @@ export function YearSelect() {
   return (
     <NativeSelect
       data={["Cały zakres", ...years]}
-      variant="filled"
       radius="xs"
-      size="xl"
+      size="lg"
       value={selectedYear}
       onChange={handleSelectChange}
     />

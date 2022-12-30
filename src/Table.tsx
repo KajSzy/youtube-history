@@ -25,14 +25,14 @@ export function Table() {
       </Tabs.List>
 
       <Tabs.Panel value="channels">
-        <Flex justify="space-between">
+        <Flex justify="space-between" direction="column" gap="xl">
           <Title>Wybierz kanał z listy poniżej</Title>
           <YearSelect />
         </Flex>
         <ChannelTable />
       </Tabs.Panel>
       <Tabs.Panel value="videos">
-        <Flex justify="space-between">
+        <Flex justify="space-between" direction="column" gap="xl">
           <Title>Lista 100 najczęściej oglądanych filmów</Title>
           <YearSelect />
         </Flex>

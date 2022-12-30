@@ -1,3 +1,8 @@
 html a {
   color: inherit;
 }
+
+html,
+body {
+  overflow-x: hidden;
+}
